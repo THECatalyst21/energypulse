@@ -2,23 +2,12 @@ import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 
-// Simple password hashing (in production, use bcrypt)
-function simpleHash(password: string): string {
-  let hash = 0;
-  for (let i = 0; i < password.length; i++) {
-    const char = password.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash;
-  }
-  return hash.toString(16);
-}
-
 export const authOptions: NextAuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email", placeholder: "admin@energypulse.com" },
+        email: { label: "Email", type: "email", placeholder: "thecatalyst@energypulse.com" },
         password: { label: "Password", type: "password" }
       },
       async authorize(credentials) {
@@ -26,12 +15,10 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        // Check for admin user
-        const adminEmail = process.env.ADMIN_EMAIL || "admin@energypulse.com";
-        const adminPassword = process.env.ADMIN_PASSWORD || "admin123";
+        const adminEmail = process.env.ADMIN_EMAIL || "thecatalyst@energypulse.com";
+        const adminPassword = process.env.ADMIN_PASSWORD || "catalyst2025";
         
         if (credentials.email === adminEmail && credentials.password === adminPassword) {
-          // Ensure author exists in database
           let author = await db.author.findUnique({ 
             where: { email: adminEmail } 
           });
@@ -40,7 +27,7 @@ export const authOptions: NextAuthOptions = {
             author = await db.author.create({
               data: {
                 email: adminEmail,
-                name: "Admin",
+                name: "thecatalyst",
                 role: "Admin",
                 avatar: null,
               }
