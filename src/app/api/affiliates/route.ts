@@ -18,7 +18,7 @@ export async function GET() {
     });
   } catch (error) {
     console.error("Error fetching affiliates:", error);
-    return NextResponse.json({ error: "Failed to fetch affiliates" }, { status: 500 });
+    return NextResponse.json({ links: [], stats: { totalRevenue: 0, totalClicks: 0, totalLinks: 0 } });
   }
 }
 
@@ -40,11 +40,11 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ success: true, url: link.url });
   } catch (error) {
     console.error("Error tracking click:", error);
-    return NextResponse.json({ error: "Failed to track click" }, { status: 500 });
+    return NextResponse.json({ success: false });
   }
 }
 
-// PUT /api/affiliates - Create/update affiliate link (admin)
+// PUT /api/affiliates - Create affiliate link
 export async function PUT(request: NextRequest) {
   try {
     const body = await request.json();

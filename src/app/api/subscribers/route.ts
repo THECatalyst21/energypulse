@@ -19,7 +19,7 @@ export async function GET() {
     return NextResponse.json({ subscribers, stats });
   } catch (error) {
     console.error("Error fetching subscribers:", error);
-    return NextResponse.json({ error: "Failed to fetch subscribers" }, { status: 500 });
+    return NextResponse.json({ subscribers: [], stats: { total: 0, active: 0, thisMonth: 0 } });
   }
 }
 
