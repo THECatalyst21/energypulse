@@ -1,141 +1,180 @@
-# 🚀 Welcome to Z.ai Code Scaffold
+# EnergyPulse - Energy Issues Blog
 
-A modern, production-ready web application scaffold powered by cutting-edge technologies, designed to accelerate your development with [Z.ai](https://chat.z.ai)'s AI-powered coding assistance.
+A modern energy news blog built with Next.js 16, TypeScript, Tailwind CSS, and PostgreSQL.
 
-## ✨ Technology Stack
+## 🚀 Features
 
-This scaffold provides a robust foundation built with:
+- 📰 **Blog Management** - Create, edit, publish articles
+- 🤖 **AI Image Generation** - Auto-generate cover images
+- 🔐 **User Authentication** - Secure admin access
+- 📱 **Social Sharing** - Twitter, Facebook, LinkedIn, Email
+- 🎨 **Modern UI** - Responsive, dark/light mode
+- 🗂️ **Categories & Tags** - Organize content
+- 💾 **PostgreSQL** - Scalable database
 
-### 🎯 Core Framework
-- **⚡ Next.js 16** - The React framework for production with App Router
-- **📘 TypeScript 5** - Type-safe JavaScript for better developer experience
-- **🎨 Tailwind CSS 4** - Utility-first CSS framework for rapid UI development
+## 🛠️ Tech Stack
 
-### 🧩 UI Components & Styling
-- **🧩 shadcn/ui** - High-quality, accessible components built on Radix UI
-- **🎯 Lucide React** - Beautiful & consistent icon library
-- **🌈 Framer Motion** - Production-ready motion library for React
-- **🎨 Next Themes** - Perfect dark mode in 2 lines of code
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS + shadcn/ui
+- **Database**: PostgreSQL + Prisma ORM
+- **Auth**: NextAuth.js
+- **AI**: z-ai-web-dev-sdk (image generation)
 
-### 📋 Forms & Validation
-- **🎣 React Hook Form** - Performant forms with easy validation
-- **✅ Zod** - TypeScript-first schema validation
+## 📦 Quick Start
 
-### 🔄 State Management & Data Fetching
-- **🐻 Zustand** - Simple, scalable state management
-- **🔄 TanStack Query** - Powerful data synchronization for React
-- **🌐 Fetch** - Promise-based HTTP request
-
-### 🗄️ Database & Backend
-- **🗄️ Prisma** - Next-generation TypeScript ORM
-- **🔐 NextAuth.js** - Complete open-source authentication solution
-
-### 🎨 Advanced UI Features
-- **📊 TanStack Table** - Headless UI for building tables and datagrids
-- **🖱️ DND Kit** - Modern drag and drop toolkit for React
-- **📊 Recharts** - Redefined chart library built with React and D3
-- **🖼️ Sharp** - High performance image processing
-
-### 🌍 Internationalization & Utilities
-- **🌍 Next Intl** - Internationalization library for Next.js
-- **📅 Date-fns** - Modern JavaScript date utility library
-- **🪝 ReactUse** - Collection of essential React hooks for modern development
-
-## 🎯 Why This Scaffold?
-
-- **🏎️ Fast Development** - Pre-configured tooling and best practices
-- **🎨 Beautiful UI** - Complete shadcn/ui component library with advanced interactions
-- **🔒 Type Safety** - Full TypeScript configuration with Zod validation
-- **📱 Responsive** - Mobile-first design principles with smooth animations
-- **🗄️ Database Ready** - Prisma ORM configured for rapid backend development
-- **🔐 Auth Included** - NextAuth.js for secure authentication flows
-- **📊 Data Visualization** - Charts, tables, and drag-and-drop functionality
-- **🌍 i18n Ready** - Multi-language support with Next Intl
-- **🚀 Production Ready** - Optimized build and deployment settings
-- **🤖 AI-Friendly** - Structured codebase perfect for AI assistance
-
-## 🚀 Quick Start
+### 1. Clone & Install
 
 ```bash
-# Install dependencies
+git clone <your-repo>
+cd energypulse
 bun install
-
-# Start development server
-bun run dev
-
-# Build for production
-bun run build
-
-# Start production server
-bun start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see your application running.
+### 2. Set Up Database
 
-## 🤖 Powered by Z.ai
+Create a PostgreSQL database (use Neon, Supabase, or local PostgreSQL):
 
-This scaffold is optimized for use with [Z.ai](https://chat.z.ai) - your AI assistant for:
+```bash
+# Copy environment file
+cp .env.example .env
 
-- **💻 Code Generation** - Generate components, pages, and features instantly
-- **🎨 UI Development** - Create beautiful interfaces with AI assistance  
-- **🔧 Bug Fixing** - Identify and resolve issues with intelligent suggestions
-- **📝 Documentation** - Auto-generate comprehensive documentation
-- **🚀 Optimization** - Performance improvements and best practices
+# Edit .env with your database credentials
+# DATABASE_URL="postgresql://..."
+```
 
-Ready to build something amazing? Start chatting with Z.ai at [chat.z.ai](https://chat.z.ai) and experience the future of AI-powered development!
+### 3. Initialize Database
+
+```bash
+# Generate Prisma client
+bun run db:generate
+
+# Push schema to database
+bun run db:push
+
+# Seed with sample data
+bun run db:seed
+```
+
+### 4. Run Development Server
+
+```bash
+bun run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000)
+
+## 🔑 Admin Login
+
+Default credentials:
+- **Email**: `admin@energypulse.com`
+- **Password**: `admin123`
+
+⚠️ **Change these in production!**
+
+## 🚀 Deploy to Vercel
+
+### Step 1: Create GitHub Repository
+
+```bash
+git init
+git add .
+git commit -m "Initial commit"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/energypulse.git
+git push -u origin main
+```
+
+### Step 2: Create PostgreSQL Database
+
+**Option A: Neon (Free)**
+1. Go to [neon.tech](https://neon.tech)
+2. Create free account
+3. Create new project
+4. Copy the connection string
+
+**Option B: Supabase (Free)**
+1. Go to [supabase.com](https://supabase.com)
+2. Create free project
+3. Go to Settings → Database
+4. Copy connection string (enable connection pooling)
+
+### Step 3: Deploy on Vercel
+
+1. Go to [vercel.com](https://vercel.com)
+2. Click "Add New" → "Project"
+3. Import your GitHub repository
+4. Add environment variables:
+
+| Variable | Value |
+|----------|-------|
+| `DATABASE_URL` | Your PostgreSQL connection string |
+| `DIRECT_DATABASE_URL` | Same as DATABASE_URL (for migrations) |
+| `ADMIN_EMAIL` | Your admin email |
+| `ADMIN_PASSWORD` | Strong password |
+| `NEXTAUTH_SECRET` | Run: `openssl rand -base64 32` |
+| `NEXTAUTH_URL` | Your Vercel URL (e.g., `https://your-app.vercel.app`) |
+
+5. Click "Deploy"
+6. Wait for build to complete
+
+### Step 4: Seed Database
+
+After deployment, run the seed script:
+
+```bash
+# Set production database URL
+export DATABASE_URL="your-production-database-url"
+bun run db:seed
+```
+
+Or use Vercel CLI:
+
+```bash
+vercel env pull .env.production
+bun run db:seed
+```
 
 ## 📁 Project Structure
 
 ```
-src/
-├── app/                 # Next.js App Router pages
-├── components/          # Reusable React components
-│   └── ui/             # shadcn/ui components
-├── hooks/              # Custom React hooks
-└── lib/                # Utility functions and configurations
+├── prisma/
+│   ├── schema.prisma    # Database schema
+│   └── seed.ts          # Sample data
+├── src/
+│   ├── app/
+│   │   ├── api/         # API routes
+│   │   ├── layout.tsx   # Root layout
+│   │   └── page.tsx     # Homepage
+│   ├── components/
+│   │   ├── ui/          # shadcn/ui components
+│   │   ├── AdminDashboard.tsx
+│   │   ├── SessionProvider.tsx
+│   │   └── SocialShare.tsx
+│   └── lib/
+│       ├── auth.ts      # NextAuth config
+│       ├── db.ts        # Prisma client
+│       └── utils.ts     # Utilities
+├── public/
+│   └── uploads/         # Generated images
+└── package.json
 ```
 
-## 🎨 Available Features & Components
+## 🔧 Environment Variables
 
-This scaffold includes a comprehensive set of modern web development tools:
+| Variable | Description |
+|----------|-------------|
+| `DATABASE_URL` | PostgreSQL connection string |
+| `DIRECT_DATABASE_URL` | For Prisma migrations |
+| `ADMIN_EMAIL` | Admin login email |
+| `ADMIN_PASSWORD` | Admin login password |
+| `NEXTAUTH_SECRET` | Random secret for JWT |
+| `NEXTAUTH_URL` | Your app's URL |
 
-### 🧩 UI Components (shadcn/ui)
-- **Layout**: Card, Separator, Aspect Ratio, Resizable Panels
-- **Forms**: Input, Textarea, Select, Checkbox, Radio Group, Switch
-- **Feedback**: Alert, Toast (Sonner), Progress, Skeleton
-- **Navigation**: Breadcrumb, Menubar, Navigation Menu, Pagination
-- **Overlay**: Dialog, Sheet, Popover, Tooltip, Hover Card
-- **Data Display**: Badge, Avatar, Calendar
+## 📝 License
 
-### 📊 Advanced Data Features
-- **Tables**: Powerful data tables with sorting, filtering, pagination (TanStack Table)
-- **Charts**: Beautiful visualizations with Recharts
-- **Forms**: Type-safe forms with React Hook Form + Zod validation
+MIT License - feel free to use for your own projects!
 
-### 🎨 Interactive Features
-- **Animations**: Smooth micro-interactions with Framer Motion
-- **Drag & Drop**: Modern drag-and-drop functionality with DND Kit
-- **Theme Switching**: Built-in dark/light mode support
+## 🙏 Credits
 
-### 🔐 Backend Integration
-- **Authentication**: Ready-to-use auth flows with NextAuth.js
-- **Database**: Type-safe database operations with Prisma
-- **API Client**: HTTP requests with Fetch + TanStack Query
-- **State Management**: Simple and scalable with Zustand
-
-### 🌍 Production Features
-- **Internationalization**: Multi-language support with Next Intl
-- **Image Optimization**: Automatic image processing with Sharp
-- **Type Safety**: End-to-end TypeScript with Zod validation
-- **Essential Hooks**: 100+ useful React hooks with ReactUse for common patterns
-
-## 🤝 Get Started with Z.ai
-
-1. **Clone this scaffold** to jumpstart your project
-2. **Visit [chat.z.ai](https://chat.z.ai)** to access your AI coding assistant
-3. **Start building** with intelligent code generation and assistance
-4. **Deploy with confidence** using the production-ready setup
-
----
-
-Built with ❤️ for the developer community. Supercharged by [Z.ai](https://chat.z.ai) 🚀
+Built with ❤️ using Next.js, Prisma, and shadcn/ui
