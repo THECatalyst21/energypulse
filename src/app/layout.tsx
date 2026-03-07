@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import AuthProvider from "@/components/SessionProvider";
@@ -15,9 +16,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "EnergyPulse - Energy Issues Blog",
-  description: "Your trusted source for renewable energy news, policy updates, market analysis, and sustainability insights.",
-  keywords: ["Energy", "Renewable", "Solar", "Wind", "Sustainability", "Policy", "Market Analysis"],
+  title: "EnergyPulse - Energy Issues Blog | Renewable Energy News & Analysis",
+  description: "Your trusted source for renewable energy news, policy updates, market analysis, and sustainability insights. Stay informed on energy issues.",
+  keywords: "Energy, Renewable Energy, Solar, Wind, EV, Sustainability, Policy, Market Analysis, Oil & Gas, Carbon",
   authors: [{ name: "EnergyPulse Team" }],
   icons: {
     icon: "/logo.svg",
@@ -41,6 +42,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Google AdSense Script */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4177020989263386"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >

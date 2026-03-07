@@ -1,112 +1,140 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect } from "react";
 
 interface AdBannerProps {
   type?: "horizontal" | "vertical" | "square";
   className?: string;
-  publisherId?: string;
-  slotId?: string;
+  slot?: string;
 }
+
+// Your AdSense Publisher ID
+const PUBLISHER_ID = "ca-pub-4177020989263386";
+
+// Default ad slots (create these in your AdSense dashboard)
+const AD_SLOTS = {
+  horizontal: "1234567890", // Replace with your horizontal ad slot
+  vertical: "0987654321",   // Replace with your vertical ad slot
+  square: "1122334455",     // Replace with your square ad slot
+};
 
 export default function AdBanner({
   type = "horizontal",
   className = "",
-  publisherId = "ca-pub-YOUR_PUBLISHER_ID",
-  slotId = "YOUR_SLOT_ID",
+  slot,
 }: AdBannerProps) {
-  const [adBlocked, setAdBlocked] = useState(false);
+  const adSlot = slot || AD_SLOTS[type];
+
+  useEffect(() => {
+    try {
+      // Push ad to AdSense
+      ((window as unknown as { adsbygoogle: unknown[] }).adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("AdSense error:", e);
+    }
+  }, []);
 
   const sizes = {
-    horizontal: "h-24 md:h-28",
-    vertical: "h-64 md:h-80",
-    square: "h-64 w-64",
+    horizontal: { minHeight: "90px", className: "w-full" },
+    vertical: { minHeight: "250px", className: "w-full max-w-[300px]" },
+    square: { minHeight: "250px", className: "w-[250px]" },
   };
 
-  // Note: Replace publisherId and slotId with your actual Google AdSense values
-  // Get them from: https://www.google.com/adsense
-
   return (
-    <div className={`relative ${className}`}>
-      {adBlocked ? (
-        <div className={`${sizes[type]} bg-gradient-to-r from-emerald-50 to-teal-50 dark:from-gray-800 dark:to-gray-700 rounded-lg flex items-center justify-center border-2 border-dashed border-emerald-200 dark:border-gray-600`}>
-          <div className="text-center p-4">
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              Ad space available
-            </p>
-            <p className="text-xs text-gray-400 mt-1">
-              Advertise with EnergyPulse
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div className={`${sizes[type]} bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-lg flex items-center justify-center border border-gray-200 dark:border-gray-600`}>
-          {/* Google AdSense will replace this content */}
-          {/* To enable ads:
-              1. Go to https://www.google.com/adsense
-              2. Add your site and get approved
-              3. Create ad units and get your publisher ID and slot ID
-              4. Replace the publisherId and slotId props above
-          */}
-          <div className="text-center p-4">
-            <p className="text-xs text-gray-400 dark:text-gray-500">
-              Advertisement
-            </p>
-            <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
-              Your ad here
-            </p>
-            <p className="text-xs text-emerald-600 dark:text-emerald-400 mt-1">
-              ads@energypulse.com
-            </p>
-          </div>
-        </div>
-      )}
+    <div className={`ad-container ${className}`}>
+      {/* Ad Label */}
+      <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-1 text-center">
+        Advertisement
+      </p>
+      
+      {/* AdSense Ad Unit */}
+      <ins
+        className={`adsbygoogle ${sizes[type].className}`}
+        style={{ display: "block", minHeight: sizes[type].minHeight }}
+        data-ad-client={PUBLISHER_ID}
+        data-ad-slot={adSlot}
+        data-ad-format="auto"
+        data-full-width-responsive="true"
+      />
     </div>
   );
 }
 
 // In-article ad component
 export function InArticleAd({ className = "" }: { className?: string }) {
+  useEffect(() => {
+    try {
+      ((window as unknown as { adsbygoogle: unknown[] }).adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("AdSense error:", e);
+    }
+  }, []);
+
   return (
     <div className={`my-8 ${className}`}>
-      <div className="bg-gradient-to-r from-emerald-50 via-teal-50 to-cyan-50 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800 rounded-xl p-6 border border-emerald-100 dark:border-gray-600">
-        <div className="text-center">
-          <p className="text-xs text-gray-400 mb-3 uppercase tracking-wide">
-            Sponsored
-          </p>
-          <div className="h-20 flex items-center justify-center">
-            <div className="text-center">
-              <p className="text-gray-500 dark:text-gray-400 text-sm">
-                📢 Advertise your energy products here
-              </p>
-              <p className="text-xs text-gray-400 mt-1">
-                Reach thousands of energy professionals
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-2 text-center">
+        Advertisement
+      </p>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block", textAlign: "center" }}
+        data-ad-client={PUBLISHER_ID}
+        data-ad-slot="1234567890" // Replace with your in-article slot
+        data-ad-format="fluid"
+        data-ad-layout="in-article"
+      />
     </div>
   );
 }
 
 // Sidebar ad component
 export function SidebarAd({ className = "" }: { className?: string }) {
+  useEffect(() => {
+    try {
+      ((window as unknown as { adsbygoogle: unknown[] }).adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("AdSense error:", e);
+    }
+  }, []);
+
   return (
-    <div className={`bg-white dark:bg-gray-800 rounded-xl p-4 border border-gray-200 dark:border-gray-700 shadow-sm ${className}`}>
-      <p className="text-xs text-gray-400 mb-3 uppercase tracking-wide text-center">
+    <div className={`bg-white dark:bg-gray-800 rounded-xl p-2 ${className}`}>
+      <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-2 text-center">
         Advertisement
       </p>
-      <div className="h-64 bg-gradient-to-b from-gray-50 to-gray-100 dark:from-gray-700 dark:to-gray-600 rounded-lg flex items-center justify-center">
-        <div className="text-center p-4">
-          <p className="text-sm text-gray-500 dark:text-gray-400">
-            🌱 Go Green
-          </p>
-          <p className="text-xs text-gray-400 mt-2">
-            Partner with us
-          </p>
-        </div>
-      </div>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block", width: "300px", height: "250px" }}
+        data-ad-client={PUBLISHER_ID}
+        data-ad-slot="0987654321" // Replace with your sidebar slot
+        data-ad-format="rectangle"
+      />
+    </div>
+  );
+}
+
+// Multiplex ad (shows multiple ads)
+export function MultiplexAd({ className = "" }: { className?: string }) {
+  useEffect(() => {
+    try {
+      ((window as unknown as { adsbygoogle: unknown[] }).adsbygoogle || []).push({});
+    } catch (e) {
+      console.error("AdSense error:", e);
+    }
+  }, []);
+
+  return (
+    <div className={className}>
+      <p className="text-[10px] text-gray-400 uppercase tracking-wide mb-2 text-center">
+        Sponsored
+      </p>
+      <ins
+        className="adsbygoogle"
+        style={{ display: "block" }}
+        data-ad-format="autorelaxed"
+        data-ad-client={PUBLISHER_ID}
+        data-ad-slot="5566778899" // Replace with your multiplex slot
+      />
     </div>
   );
 }
