@@ -1,5 +1,4 @@
 // PostgreSQL Schema for Production (Vercel)
-// Rename this file to schema.prisma when deploying to production
 
 generator client {
   provider = "prisma-client-js"
@@ -81,4 +80,50 @@ model Comment {
   updatedAt   DateTime @updatedAt
 
   @@index([postId])
+}
+
+// Newsletter Subscribers
+model Subscriber {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  active    Boolean  @default(true)
+  source    String?  // 'organic', 'popup', 'footer', etc.
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([active])
+}
+
+// Affiliate Links Tracking
+model AffiliateLink {
+  id          String   @id @default(cuid())
+  name        String
+  url         String
+  description String?
+  category    String?  // 'solar', 'ev', 'books', etc.
+  clicks      Int      @default(0)
+  revenue     Float    @default(0)
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+  @@index([active])
+}
+
+// Ad Performance Tracking
+model AdImpression {
+  id        String   @id @default(cuid())
+  adType    String   // 'banner', 'sidebar', 'inline', etc.
+  position  String   // 'header', 'sidebar', 'footer', etc.
+  clicks    Int      @default(0)
+  views     Int      @default(0)
+  revenue   Float    @default(0)
+  date      DateTime @default(now())
+  createdAt DateTime @default(now())
+
+  @@index([adType])
+  @@index([date])
 }
