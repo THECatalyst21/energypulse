@@ -1,11 +1,11 @@
-// SQLite Schema for Local Development
+// PostgreSQL Schema for Production (Vercel + Neon)
 
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
